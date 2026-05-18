@@ -1,0 +1,6 @@
+config.yaml
+credentials.enc
+guardian.key
+*.pyc
+__pycache__/
+.guardian-state.json

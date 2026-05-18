@@ -1,0 +1,73 @@
+# Guardian 配置文件
+# 复制为 config.yaml 后填写你的信息
+# ⚠️ 绝对不要把 config.yaml 推到 GitHub
+
+# 静默检测
+silence:
+  # 检测方式: telegram / file_mtime / heartbeat_url
+  check_method: telegram
+  # telegram 方式需要的配置
+  telegram_offset_file: ~/.guardian/telegram-offset.json
+  # file_mtime 方式：监控某个文件的修改时间
+  # watch_file: ~/.guardian/heartbeat
+  # heartbeat_url 方式：定时 GET 某个 URL 检查响应
+  # heartbeat_url: https://your-server.com/heartbeat
+
+  # 多久没活动算"静默"（小时）
+  threshold_hours: 48
+  # 多久检查一次（分钟）
+  check_interval_minutes: 60
+
+# 告警通知
+alert:
+  # 紧急联系人邮箱
+  email_to: your-friend@example.com
+  # 发件邮箱
+  email_from: your-email@gmail.com
+  # SMTP 配置
+  smtp_server: smtp.gmail.com
+  smtp_port: 587
+  # SMTP 密码通过 setup 命令加密存储，不写在这里
+
+  # 告警邮件内容（可选自定义）
+  # subject: "自动通知：我可能出了状况"
+  # body: "你好，这是我设置的自动通知。我已经超过{hours}小时没有任何回应，请确认我是否安全。"
+
+  # 紧急联系人确认后才触发清理（默认开启）
+  require_confirmation: true
+  # 确认方式: email_reply / confirmation_url
+  confirmation_method: email_reply
+  # 确认后等待多久再执行清理（小时），给最后的反悔窗口
+  grace_period_hours: 24
+
+# 要清理的平台
+platforms:
+  - name: claude
+    enabled: true
+    method: browser
+    url: https://claude.ai
+    # 登录凭据通过 setup 命令加密存储
+
+  - name: chatgpt
+    enabled: true
+    method: browser
+    url: https://chatgpt.com
+    # 登录凭据通过 setup 命令加密存储
+
+  - name: deepseek
+    enabled: false
+    method: api
+    api_base: https://api.deepseek.com
+    # API key 通过 setup 命令加密存储
+
+  - name: gemini
+    enabled: false
+    method: browser
+    url: https://gemini.google.com
+    # Google 账号通过 setup 命令加密存储
+
+  - name: grok
+    enabled: false
+    method: browser
+    url: https://grok.x.ai
+    # X 账号通过 setup 命令加密存储
